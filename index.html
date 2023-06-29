@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 100px;
+    }
+    
+    .container h2 {
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm" method="POST" action="login.php">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#loginForm').submit(function(event) {
+        event.preventDefault();
+        
+        // Fetch form values
+        var username = $('#username').val();
+        var password = $('#password').val();
+        
+        // Send AJAX request to login.php
+        $.ajax({
+          type: 'POST',
+          url: 'login.php',
+          data: { username: username, password: password },
+          success: function(response) {
+            if (response === 'success') {
+              // Redirect to appropriate page based on user type
+              if (username === 'admin') {
+                window.location.href = 'admin.php';
+              } else {
+                window.location.href = 'customer.php';
+              }
+            } else {
+              alert('Invalid username or password. Please try again.');
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
